@@ -1576,7 +1576,7 @@ def chatsActivity():
     senderid = request.values.get("senderid")
     print(senderid)
     querry = chat_db.aggregate([
-        {'$match':{"senderid":senderid}},
+        {'$match' :{"senderid":senderid}},
         {'$sort':{"timestamp": -1}}
         ])
     abc=[]
