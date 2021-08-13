@@ -3,4 +3,4 @@ Werkzeug==2.0.1
 Flask_Cors==3.0.10
 pymongo==3.11.4
 python_bcrypt==0.3.2
-gunicorn
+gunicorn==20.1.0
