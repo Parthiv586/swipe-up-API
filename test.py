@@ -260,6 +260,42 @@ def searchUser():
   
   #################################### REGISTRATION API #################################################################
   
+  
+  
+  
+  
+############################################# REGISTRATION API ###############################################
+
+
+@app.route('/registration/email12', methods=['POST'])
+def email12():
+    e_mail = request.values.get("emailid")
+    print(e_mail)
+    # query = collection.find()
+    # types = 'effect'
+    a = ""
+    output = {}
+    bkmk = registartion.find_one({'email':e_mail})
+    print(bkmk)
+    if bkmk is None:
+        # queryObject = {
+        #         'email':e_mail
+        #     }
+        # emailOtp(e_mail)
+        output["response"] = "success"
+        return JSONEncoder().encode(output)
+        # a = "success"
+        # return "success" 
+        # query = registartion.insert_one(queryObject) #registartion table
+    else:
+        # queryObject = {'user_id':user_id, 'element_id':effect_id }
+        # updateObject = {'bookmark_time':datetime.now()}
+        # query = bookmarks.update_one(queryObject, {'$set': updateObject})
+        # print('update')
+        output["response"] = "registerd"
+        return JSONEncoder().encode(output)
+
+  
 #### getting error here ########
 @app.route('/registration/sendemailOtp', methods=['POST'])
 def emailOtp():
