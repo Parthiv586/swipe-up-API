@@ -440,6 +440,28 @@ def OtpVerify():
         
         
         
+######## error ##############################
+@app.route('/registration/birthdate', methods=['POST'])
+def birthdate():
+    b_irthdate = request.values.get("birthdate")
+    user_id = request.values.get("user_id")
+    regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+    # query = collection.find()
+    # types = 'effect'
+    # bkmk = registartion.find_one({'email':email})
+    output = {}
+    if(re.search(regex, user_id)):
+        queryObject = {'email':user_id}
+        updateObject = {'birthdate':b_irthdate}
+        query = registartion.update_one(queryObject, {'$set': updateObject})
+        output["response"] = "verified"
+        return JSONEncoder().encode(output)
+    else:
+        queryObject = {'phone':user_id}
+        updateObject = {'birthdate':b_irthdate}
+        query = registartion.update_one(queryObject, {'$set': updateObject})
+        output["response"] = "verified"
+        return JSONEncoder().encode(output)
         
         
 
