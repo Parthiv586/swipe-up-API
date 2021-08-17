@@ -618,6 +618,30 @@ def SignIn():
             print("It Does not Match :(")
             output["response"] = "wrong password"
             return JSONEncoder().encode(output)
+          
+          
+          
+          
+          
+          
+   #############error #############333     
+@app.route('/editProfilees', methods=['POST'])
+def editprofilees():
+    user_id = request.values.get("user_id")
+    name = request.values.get("name")
+    userid1 = '"'+user_id +'"'
+    print(ObjectId(user_id))
+    queryObject = {'_id': ObjectId(user_id)}
+    updateObject = {'nameeeeeee': name}#{"age": 23}
+    query = collection.update_one(queryObject, {'$set': updateObject})
+    if query.acknowledged:
+        return "Update Successful"
+    else:
+        return "Update Unsuccessful"
+
+          
+          
+          
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
 #     values = request.values.get("username") 
