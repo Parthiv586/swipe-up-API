@@ -232,6 +232,32 @@ def search():
 
 
 
+@app.route('/searchUser', methods=['POST'])
+def searchUser():
+    search = request.values.get("search") 
+    # if len(search) == 0:
+    #     output = {}
+    #     print('*')
+    # else:
+    v1 = '.*'+search+'.*'
+    rgx = re.compile(v1, re.IGNORECASE)
+    print(rgx)
+
+
+    queryObject = {"username": rgx}
+    query = collection.find(queryObject) #profile table
+    output = {}
+    abc = []
+    i = 0
+    print(query)
+    for x in query:
+        abc.append(x)
+        print(x)
+    print(abc)
+    output["users"] = abc
+    return JSONEncoder().encode(output)
+
+
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
 #     values = request.values.get("username") 
