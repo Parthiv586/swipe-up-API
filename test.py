@@ -257,6 +257,55 @@ def searchUser():
     output["users"] = abc
     return JSONEncoder().encode(output)
 
+  
+  #################################### REGISTRATION API #################################################################
+  
+#### getting error here ########
+@app.route('/registration/sendemailOtp', methods=['POST'])
+def emailOtp():
+    e_mail = request.values.get("emailid")
+    print(e_mail)
+    emailOtps = int(random.randint(1000,9999))
+    print(random.randint(1000,9999))
+    bkmk = otp.find_one({'email':e_mail})
+    print(bkmk)
+    # creates SMTP session
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    output={}
+    # start TLS for security
+    s.starttls()
+    
+    # Authentication
+    s.login("testmailfear@gmail.com", "@kshay12")
+    
+    # message to be sent
+    message = """Subject: SMTP e-mail test
+
+                This is a test e-mail message.
+                """ + "Otp for verification " + str(emailOtps) 
+    
+    # sending the mail
+    s.sendmail("testmailfear@gmail.com", e_mail, message)
+    
+    # terminating the session
+    s.quit()
+    if bkmk is None:
+        queryObject = {
+                'email':e_mail,
+                'otp_email':emailOtps
+            }
+        query = otp.insert_one(queryObject) #Otp table
+        output["response"] = "success"
+        return JSONEncoder().encode(output)
+    else:
+        queryObject = {'email':e_mail}
+        # updateObject = {'bookmark_time':datetime.now()}
+        updateObject ={'otp_email': emailOtps}
+        query = otp.update_one(queryObject, {'$set': updateObject})
+        output["response"] = "success"
+        return JSONEncoder().encode(output)
+        # output["response"] = "success"
+        # return JSONEncoder().encode(output)
 
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
