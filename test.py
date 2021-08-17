@@ -109,6 +109,30 @@ def findAlls():
 
 
 
+#################### error #########################
+@app.route('/searchtabs', methods=['POST'])
+def findAllss():
+    values = request.values.get("search") 
+    print(len(values))
+    if len(values) == 0:
+        output = {}
+        print('*')
+    else:
+        v1 = '.*'+values+'.*'
+        rgx = re.compile(v1, re.IGNORECASE)
+        print(rgx)
+        queryObject = {"username": rgx}
+        query = collection.find(queryObject)
+        output = {}
+        abc = []
+        i = 0
+        print(query)
+        for x in query:
+            abc.append(x)
+            print(x)
+        print(abc)
+        output["users"] = abc
+    return JSONEncoder().encode(output)
 
 
 
