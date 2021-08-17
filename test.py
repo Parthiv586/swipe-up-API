@@ -135,13 +135,6 @@ def findAllss():
     return JSONEncoder().encode(output)
 
 
-####### getting errror in this api ##############
-@app.route('/find-one/<argument>/<value>/', methods=['GET'])
-def findOne(argument, value):
-    queryObject = {argument: value}
-    query = collection.find_one(queryObject)
-    query.pop('_id')
-    return jsonify(query)
 
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
