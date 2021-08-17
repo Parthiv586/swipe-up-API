@@ -150,6 +150,87 @@ def get_text_prediction():
     return jsonify({'you sent this': json['text']})
 
 
+  
+  
+  
+  
+  
+  
+
+#########################################################Search api ###################################################
+
+##getting error ####
+@app.route('/search', methods=['POST'])
+def search():
+    search = request.values.get("search") 
+    print(len(search))
+    if len(search) == 0:
+        output = {}
+        print('*')
+    else:
+        v1 = '.*'+search+'.*'
+        rgx = re.compile(v1, re.IGNORECASE)
+        print(rgx)
+
+
+        queryObject = {"username": rgx}
+        query = collection.find(queryObject) #profile table
+        output = {}
+        abc = []
+        i = 0
+        print(query)
+        for x in query:
+            abc.append(x)
+            print(x)
+        print(abc)
+
+
+
+        queryObject1 = {"hashtag": rgx}
+        query1 = collection.find(queryObject1) #hashtag table
+        # output = {}
+        abc1 = []
+        i = 0
+        print(query1)
+        for y in query1:
+            abc1.append(y)
+            print(y)
+        print(abc1)
+
+
+
+        queryObject2 = {"sound": rgx}
+        query2 = collection.find(queryObject2) #sound table
+        # output = {}
+        abc2 = []
+        i = 0
+        print(query2)
+        for z in query2:
+            abc2.append(z)
+            print(z)
+        print(abc2)
+
+
+        queryObject3 = {"video": rgx}
+        query3 = collection.find(queryObject3) #video table
+        # output = {}
+        abc3 = []
+        i = 0
+        print(query3)
+        for a in query3:
+            abc3.append(a)
+            print(a)
+        print(abc3)
+
+
+
+        output["users"] = abc
+        output["hashtags"] = abc1
+        output["sounds"] = abc2
+        output["videos"] = abc3
+    return JSONEncoder().encode(output)
+
+
 
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
