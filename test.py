@@ -509,6 +509,115 @@ def password():
         else:
             output["response"] = "verified"
             return JSONEncoder().encode(output)
+          
+          
+          
+          
+          
+          
+          
+          
+          
+###### erorr#################
+@app.route('/signIIn', methods=['POST'])
+def SignIn():
+    user_id = request.values.get("user_id")
+    print(user_id)
+    paassword = request.values.get("password")
+    a = paassword.encode("utf-8")
+    print(a)
+    print(paassword)
+    regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+    regex1 = "(0|91)?[7-9][0-9]{9}"
+    # obj = AES.new('This is a key123', AES.MODE_CBC, 'This is an IV456')
+    # message = b"The answer is no"
+    # print(message)
+    # ciphertext = obj.encrypt(message)
+    # print(ciphertext)
+
+
+    # passworda = "super secret password"
+    # print(passworda)
+    # hashed = bcrypt.hashpw(a, bcrypt.gensalt(14))
+    # print(hashed)
+    # hashed1 = b'$2b$14$KmJZ7KQRfj/rka5C5JI6p.hh20FyWGHNdEqDgT6pBFiHE4t.U19Vm'
+    # if bcrypt.checkpw(a, hashed1):
+    #     print("It Matches!")
+    # else:
+    #     print("It Does not Match :(")
+    # regex2  = "[7-9][0-9]{9}"
+    # query = collection.find()
+    # types = 'effect'
+    # bkmk = registartion.find_one({'email':email})
+    if(re.search(regex, user_id)):
+        bkmk = registartion.find_one({'email':user_id})
+        print(bkmk)
+        output = {}
+        abc = []
+        print(bkmk['password'])
+        if bcrypt.checkpw(a, bkmk['password']):
+            print("It Matches!")
+            bkmk = collection.find_one({'email':user_id})
+            # for x in bkmk:
+            #     print(x)
+            print(bkmk)
+            output["xyz"] = bkmk
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+        else:
+            print("It Does not Match :(")
+            output["response"] = "wrong password"
+            return JSONEncoder().encode(output)
+        # for x in bkmk:
+        #     abc.append(x)
+        #     print(x)
+        # print(abc)
+        # output["users"] = abc
+        # queryObject = {'email':e_mail}
+        # updateObject = {'password':p_assword}
+        # query = registartion.update_one(queryObject, {'$set': updateObject})
+        # return JSONEncoder().encode(output)
+    elif(re.search(regex1, user_id)):
+        bkmk = registartion.find_one({'phone':user_id})
+        output = {}
+        abc = []
+        print(bkmk)
+        # print(bkmk['password'])
+        if bcrypt.checkpw(a, bkmk['password']):
+            print("It Matches!")
+            bkmk = collection.find_one({'phone':user_id})
+            output["users"] = bkmk
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+        else:
+            print("It Does not Match :(")
+            output["response"] = "wrong password"
+            return JSONEncoder().encode(output)
+        # for x in bkmk:
+        #     abc.append(x)
+        # print(x)
+        # print(abc)
+        # output["users"] = abc
+        # # queryObject = {'email':e_mail}
+        # # updateObject = {'password':p_assword}
+        # # query = registartion.update_one(queryObject, {'$set': updateObject})
+        # return JSONEncoder().encode(output)
+    else:
+        bkmk = registartion.find_one({'username':user_id})
+        output = {}
+        abc = []
+        print(bkmk)
+        print(bkmk['password'])
+        if bcrypt.checkpw(a, bkmk['password']):
+            print("Its Matches!")
+            bkmk = collection.find_one({'username':user_id})
+            output["users"] = bkmk
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+        else:
+            print("It Does not Match :(")
+            output["response"] = "wrong password"
+            return JSONEncoder().encode(output)
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
 #     values = request.values.get("username") 
