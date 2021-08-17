@@ -109,7 +109,7 @@ def findAlls():
 
 
 
-#################### error #########################
+#################### wk #########################
 @app.route('/searchtabs', methods=['POST'])
 def findAllss():
     values = request.values.get("search") 
@@ -159,7 +159,7 @@ def get_text_prediction():
 
 #########################################################Search api ###################################################
 
-##getting error ####
+## wk ####
 @app.route('/search', methods=['POST'])
 def search():
     search = request.values.get("search") 
@@ -403,7 +403,7 @@ def phoneOtp(p_hone):
         query = otp.update_one(queryObject, {'$set': updateObject})
         return "Query Inserted!!"
 
-############# error ###########################
+############# wk ###########################
 @app.route('/otpVerfication', methods=['POST'])
 def OtpVerify():
     user_id = request.values.get("user_id")
@@ -440,7 +440,7 @@ def OtpVerify():
         
         
         
-######## error ##############################
+######## wk ##############################
 @app.route('/registration/birthdate', methods=['POST'])
 def birthdate():
     b_irthdate = request.values.get("birthdate")
@@ -465,6 +465,50 @@ def birthdate():
         
         
 
+###### eroror ##############################
+@app.route('/registration/password', methods=['POST'])
+def password():
+    p_assword = request.values.get("password")
+    user_id = request.values.get("user_id")
+    regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+    a = p_assword.encode("utf-8")
+    hashed = bcrypt.hashpw(a, bcrypt.gensalt(14))
+    print(hashed)
+    # query = collection.find()
+    # types = 'effect'
+    # bkmk = registartion.find_one({'email':email})
+    output ={}
+    if(re.search(regex, user_id)):
+        queryObject = {'email': user_id}
+        x123 = str(datetime.now())
+        print(x123)
+        updateObject = {'password':hashed, 'created_at':x123}
+        query = registartion.update_one(queryObject, {'$set': updateObject})
+        bkmk = registartion.find_one({'email':user_id})
+        bkmk2 = collection.find_one({'email':user_id})
+        if bkmk2 is None:
+            bkmk1 = collection.insert_one({ 'register_id':bkmk['_id'],'email':bkmk['email'], 'birthdate':bkmk['birthdate'], 'username':bkmk['username'], 'pagename':bkmk['pagename']})
+            print('update')
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+        else:
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+            # return "password Inserted!!"
+    else:
+        queryObject = {'phone':user_id}
+        updateObject = {'password':hashed, 'created_at':datetime.now()}
+        query = registartion.update_one(queryObject, {'$set': updateObject})
+        bkmk = registartion.find_one({'phone':user_id})
+        bkmk2 = collection.find_one({'phone':user_id})
+        if bkmk2 is None:
+            bkmk1 = collection.insert_one({ 'register_id':bkmk['_id'],'phone':bkmk['phone'], 'birthdate':bkmk['birthdate'], 'username':bkmk['username'], 'pagename':bkmk['pagename']})
+            print('update')
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+        else:
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
 #     values = request.values.get("username") 
