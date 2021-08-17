@@ -135,6 +135,21 @@ def findAllss():
     return JSONEncoder().encode(output)
 
 
+##################### getting error in this api #####################
+@app.route('/api/post_some_data', methods=['POST'])
+def get_text_prediction():
+    """
+    predicts requested text whether it is ham or spam
+    :return: json
+    """
+    json = request.get_json()
+    print(json)
+    if len(json['text']) == 0:
+        return jsonify({'error': 'invalid input'})
+
+    return jsonify({'you sent this': json['text']})
+
+
 
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
