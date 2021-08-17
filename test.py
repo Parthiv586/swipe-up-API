@@ -342,6 +342,106 @@ def emailOtp():
         return JSONEncoder().encode(output)
         # output["response"] = "success"
         # return JSONEncoder().encode(output)
+        
+        
+        
+        
+@app.route('/registration/phone', methods=['POST'])
+def phone():
+    p_hone = request.values.get("p_hone")
+    # query = collection.find()
+    # types = 'effect'
+    bkmk = registartion.find_one({'phone':p_hone})
+    if bkmk is None:
+        # queryObject = {
+        #         'email':e_mail
+        #     }
+        phoneOtp(p_hone)
+        return "otp send"
+        # query = registartion.insert_one(queryObject) #registartion table
+    else:
+        # queryObject = {'user_id':user_id, 'element_id':effect_id }
+        # updateObject = {'bookmark_time':datetime.now()}
+        # query = bookmarks.update_one(queryObject, {'$set': updateObject})
+        # print('update')
+        return "User Registred!"
+
+
+# @app.route('/registration/emailOtp', methods=['POST'])
+def phoneOtp(p_hone):
+    print(p_hone)
+    phoneOtps = int(random.randint(1000,9999))
+    print(random.randint(1000,9999))
+    bkmk = otp.find_one({'phone':p_hone})
+    print(bkmk)
+    account_sid = 'ACe975581ef18a344680b31468b79d4cd1'
+    auth_token = 'dc8eb786d2a005db9d3a7a45095e34fa'
+    
+    client = Client(account_sid, auth_token)
+    
+    ''' Change the value of 'from' with the number 
+    received from Twilio and the value of 'to'
+    with the number in which you want to send message.'''
+    message = client.messages.create(
+                                from_='+12034036973',
+                                body ='Your SwipeUp Otp Verification is: ' + str(phoneOtps),
+                                to = '+91'+str(p_hone)
+                            )
+    
+    print(message.sid)
+    if bkmk is None:
+        queryObject = {
+                'phone':p_hone,
+                'otp_phone':phoneOtps
+            }
+        query = otp.insert_one(queryObject) #Otp table
+        return "Query Inserted1 !!"
+    else:
+        queryObject = {'phone':p_hone}
+        # updateObject = {'bookmark_time':datetime.now()}
+        updateObject ={'otp_phone': phoneOtps}
+        query = otp.update_one(queryObject, {'$set': updateObject})
+        return "Query Inserted!!"
+
+############# error ###########################
+@app.route('/otpVerfication', methods=['POST'])
+def OtpVerify():
+    user_id = request.values.get("user_id")
+    o_t_p = request.values.get("otp")
+    # query = collection.find()
+    # types = 'effect'
+    output={}
+    regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+    if(re.search(regex, user_id)):
+        print("Valid Email")
+        bkmk = otp.find_one({'email': user_id, 'otp_email':int(o_t_p)})
+        if bkmk is None:
+            output["response"] = "wrong otp"
+            return JSONEncoder().encode(output)
+            # return "otp wrong!"
+        else:
+            bkmk1 = registartion.insert_one({"email": user_id})
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+            return "otp verified!"
+    else:
+        print("Invalid Email")
+        bkmk = otp.find_one({'phone': user_id, 'otp_phone':int(o_t_p)})
+        if bkmk is None:
+            output["response"] = "wrong otp"
+            return JSONEncoder().encode(output)
+        else:
+            bkmk1 = registartion.insert_one({"phone": user_id})
+            output["response"] = "verified"
+            return JSONEncoder().encode(output)
+
+        
+        
+        
+        
+        
+        
+        
 
 # @app.route('/findfriends', methods=['POST'])
 # def findAlls():
