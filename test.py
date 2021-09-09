@@ -3991,7 +3991,6 @@ def followerfollowingcount():
 if __name__ == '__main__':
     app.debug = True
     app.run()
-<<<<<<< HEAD
 
 
 
@@ -4046,5 +4045,3 @@ if __name__ == '__main__':
 # if __name__ == '__main__':
 #     app.debug = True
 #     app.run()
-=======
->>>>>>> c99cb4a20b85d6dad1254b8480d0ee43f52d7693
