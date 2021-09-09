@@ -162,7 +162,7 @@ def findAlls():
 
 #################### error #########################
 @app.route('/searchtabs', methods=['POST'])
-def findAllss():
+def findAlllss():
     values = request.values.get("search") 
     print(len(values))
     if len(values) == 0:
@@ -399,12 +399,12 @@ def insertOne(name, id):
 
 
 
-@app.route('/find-one/<argument>/<value>/', methods=['GET'])
-def findOne(argument, value):
-    queryObject = {argument: value}
-    query = collection.find_one(queryObject)
-    query.pop('_id')
-    return jsonify(query)
+# @app.route('/find-one/<argument>/<value>/', methods=['GET'])
+# def findOne(argument, value):
+#     queryObject = {argument: value}
+#     query = collection.find_one(queryObject)
+#     query.pop('_id')
+#     return jsonify(query)
 
 
 @app.route('/update/<key>/<value>/<element>/<updateValue>/', methods=['GET'])
@@ -453,105 +453,105 @@ def get_text_prediction():
 
 
 #########################################################Search api ###################################################
-
-##getting error ####
-@app.route('/search', methods=['POST'])
-def search():
-    search = request.values.get("search") 
-    print(len(search))
-    if len(search) == 0:
-        output = {}
-        print('*')
-    else:
-        v1 = '.*'+search+'.*'
-        rgx = re.compile(v1, re.IGNORECASE)
-        print(rgx)
-
-
-        queryObject = {"username": rgx}
-        query = collection.find(queryObject) #profile table
-        output = {}
-        abc = []
-        i = 0
-        print(query)
-        for x in query:
-            abc.append(x)
-            print(x)
-        print(abc)
+##comment out ny me due to double
+# ##getting error ####
+# @app.route('/search', methods=['POST'])
+# def search():
+#     search = request.values.get("search") 
+#     print(len(search))
+#     if len(search) == 0:
+#         output = {}
+#         print('*')
+#     else:
+#         v1 = '.*'+search+'.*'
+#         rgx = re.compile(v1, re.IGNORECASE)
+#         print(rgx)
 
 
-
-        queryObject1 = {"hashtag": rgx}
-        query1 = collection.find(queryObject1) #hashtag table
-        # output = {}
-        abc1 = []
-        i = 0
-        print(query1)
-        for y in query1:
-            abc1.append(y)
-            print(y)
-        print(abc1)
+#         queryObject = {"username": rgx}
+#         query = collection.find(queryObject) #profile table
+#         output = {}
+#         abc = []
+#         i = 0
+#         print(query)
+#         for x in query:
+#             abc.append(x)
+#             print(x)
+#         print(abc)
 
 
 
-        queryObject2 = {"sound": rgx}
-        query2 = collection.find(queryObject2) #sound table
-        # output = {}
-        abc2 = []
-        i = 0
-        print(query2)
-        for z in query2:
-            abc2.append(z)
-            print(z)
-        print(abc2)
-
-
-        queryObject3 = {"video": rgx}
-        query3 = collection.find(queryObject3) #video table
-        # output = {}
-        abc3 = []
-        i = 0
-        print(query3)
-        for a in query3:
-            abc3.append(a)
-            print(a)
-        print(abc3)
+#         queryObject1 = {"hashtag": rgx}
+#         query1 = collection.find(queryObject1) #hashtag table
+#         # output = {}
+#         abc1 = []
+#         i = 0
+#         print(query1)
+#         for y in query1:
+#             abc1.append(y)
+#             print(y)
+#         print(abc1)
 
 
 
-        output["users"] = abc
-        output["hashtags"] = abc1
-        output["sounds"] = abc2
-        output["videos"] = abc3
-    return JSONEncoder().encode(output)
+#         queryObject2 = {"sound": rgx}
+#         query2 = collection.find(queryObject2) #sound table
+#         # output = {}
+#         abc2 = []
+#         i = 0
+#         print(query2)
+#         for z in query2:
+#             abc2.append(z)
+#             print(z)
+#         print(abc2)
 
 
+#         queryObject3 = {"video": rgx}
+#         query3 = collection.find(queryObject3) #video table
+#         # output = {}
+#         abc3 = []
+#         i = 0
+#         print(query3)
+#         for a in query3:
+#             abc3.append(a)
+#             print(a)
+#         print(abc3)
+
+
+
+#         output["users"] = abc
+#         output["hashtags"] = abc1
+#         output["sounds"] = abc2
+#         output["videos"] = abc3
+#     return JSONEncoder().encode(output)
+
+##till here ####
 ### getting error ###
 
-@app.route('/searchUser', methods=['POST'])
-def searchUser():
-    search = request.values.get("search") 
-    # if len(search) == 0:
-    #     output = {}
-    #     print('*')
-    # else:
-    v1 = '.*'+search+'.*'
-    rgx = re.compile(v1, re.IGNORECASE)
-    print(rgx)
+# @app.route('/searchUser', methods=['POST'])
+# def searchUser():
+#     search = request.values.get("search") 
+#     # if len(search) == 0:
+#     #     output = {}
+#     #     print('*')
+#     # else:
+#     v1 = '.*'+search+'.*'
+#     rgx = re.compile(v1, re.IGNORECASE)
+#     print(rgx)
 
 
-    queryObject = {"username": rgx}
-    query = collection.find(queryObject) #profile table
-    output = {}
-    abc = []
-    i = 0
-    print(query)
-    for x in query:
-        abc.append(x)
-        print(x)
-    print(abc)
-    output["users"] = abc
-    return JSONEncoder().encode(output)
+#     queryObject = {"username": rgx}
+#     query = collection.find(queryObject) #profile table
+#     output = {}
+#     abc = []
+#     i = 0
+#     print(query)
+#     for x in query:
+#         abc.append(x)
+#         print(x)
+#     print(abc)
+#     output["users"] = abc
+#     return JSONEncoder().encode(output)
 
 
 
@@ -828,7 +828,7 @@ def bookmarkRemoveEffect():
 
 #################### wk #########################
 @app.route('/searchtabs', methods=['POST'])
-def findAllssss():
+def findAllss():
     values = request.values.get("search") 
     print(len(values))
     if len(values) == 0:
@@ -853,18 +853,18 @@ def findAllssss():
 
 
 ##################### getting error in this api #####################
-@app.route('/api/post_some_data', methods=['POST'])
-def get_text_prediction():
-    """
-    predicts requested text whether it is ham or spam
-    :return: json
-    """
-    json = request.get_json()
-    print(json)
-    if len(json['text']) == 0:
-        return jsonify({'error': 'invalid input'})
+# @app.route('/api/post_some_data', methods=['POST'])
+# def get_text_prediction():
+#     """
+#     predicts requested text whether it is ham or spam
+#     :return: json
+#     """
+#     json = request.get_json()
+#     print(json)
+#     if len(json['text']) == 0:
+#         return jsonify({'error': 'invalid input'})
 
-    return jsonify({'you sent this': json['text']})
+#     return jsonify({'you sent this': json['text']})
 
 
   
@@ -983,174 +983,6 @@ def searchUser():
   
 ############################################# REGISTRATION API ###############################################
 
-
-@app.route('/registration/email12', methods=['POST'])
-def email12():
-    e_mail = request.values.get("emailid")
-    print(e_mail)
-    # query = collection.find()
-    # types = 'effect'
-    a = ""
-    output = {}
-    bkmk = registartion.find_one({'email':e_mail})
-    print(bkmk)
-    if bkmk is None:
-        # queryObject = {
-        #         'email':e_mail
-        #     }
-        # emailOtp(e_mail)
-        output["response"] = "success"
-        return JSONEncoder().encode(output)
-        # a = "success"
-        # return "success" 
-        # query = registartion.insert_one(queryObject) #registartion table
-    else:
-        # queryObject = {'user_id':user_id, 'element_id':effect_id }
-        # updateObject = {'bookmark_time':datetime.now()}
-        # query = bookmarks.update_one(queryObject, {'$set': updateObject})
-        # print('update')
-        output["response"] = "registerd"
-        return JSONEncoder().encode(output)
-
-  
-#### getting error here ########
-@app.route('/registration/sendemailOtp', methods=['POST'])
-def emailOtp():
-    e_mail = request.values.get("emailid")
-    print(e_mail)
-    emailOtps = int(random.randint(1000,9999))
-    print(random.randint(1000,9999))
-    bkmk = otp.find_one({'email':e_mail})
-    print(bkmk)
-    # creates SMTP session
-    s = smtplib.SMTP('smtp.gmail.com', 587)
-    output={}
-    # start TLS for security
-    s.starttls()
-    
-    # Authentication
-    s.login("testmailfear@gmail.com", "@kshay12")
-    
-    # message to be sent
-    message = """Subject: SMTP e-mail test
-
-                This is a test e-mail message.
-                """ + "Otp for verification " + str(emailOtps) 
-    
-    # sending the mail
-    s.sendmail("testmailfear@gmail.com", e_mail, message)
-    
-    # terminating the session
-    s.quit()
-    if bkmk is None:
-        queryObject = {
-                'email':e_mail,
-                'otp_email':emailOtps
-            }
-        query = otp.insert_one(queryObject) #Otp table
-        output["response"] = "success"
-        return JSONEncoder().encode(output)
-    else:
-        queryObject = {'email':e_mail}
-        # updateObject = {'bookmark_time':datetime.now()}
-        updateObject ={'otp_email': emailOtps}
-        query = otp.update_one(queryObject, {'$set': updateObject})
-        output["response"] = "success"
-        return JSONEncoder().encode(output)
-        # output["response"] = "success"
-        # return JSONEncoder().encode(output)
-        
-        
-        
-        
-# @app.route('/registration/phone', methods=['POST'])
-# def phone():
-#     p_hone = request.values.get("p_hone")
-#     # query = collection.find()
-#     # types = 'effect'
-#     bkmk = registartion.find_one({'phone':p_hone})
-#     if bkmk is None:
-#         # queryObject = {
-#         #         'email':e_mail
-#         #     }
-#         phoneOtp(p_hone)
-#         return "otp send"
-#         # query = registartion.insert_one(queryObject) #registartion table
-#     else:
-#         # queryObject = {'user_id':user_id, 'element_id':effect_id }
-#         # updateObject = {'bookmark_time':datetime.now()}
-#         # query = bookmarks.update_one(queryObject, {'$set': updateObject})
-#         # print('update')
-#         return "User Registred!"
-
-
-# # @app.route('/registration/emailOtp', methods=['POST'])
-# def phoneOtp(p_hone):
-#     print(p_hone)
-#     phoneOtps = int(random.randint(1000,9999))
-#     print(random.randint(1000,9999))
-#     #bkmk = otp.find_one({'phone':p_hone})
-#    # print(bkmk)
-#     account_sid = 'ACe975581ef18a344680b31468b79d4cd1'
-#     auth_token = 'dc8eb786d2a005db9d3a7a45095e34fa'
-    
-#     #client =Client(account_sid, auth_token)
-    
-#     ''' Change the value of 'from' with the number 
-#     received from Twilio and the value of 'to'
-#     with the number in which you want to send message.'''
-#     message = client.messages.create(
-#                                 from_='+12034036973',
-#                                 body ='Your SwipeUp Otp Verification is: ' + str(phoneOtps),
-#                                 to = '+91'+str(p_hone)
-#                             )
-    
-#     print(message.sid)
-#     if bkmk is None:
-#         queryObject = {
-#                 'phone':p_hone,
-#                 'otp_phone':phoneOtps
-#             }
-#         query = otp.insert_one(queryObject) #Otp table
-#         return "Query Inserted1 !!"
-#     else:
-#         queryObject = {'phone':p_hone}
-#         # updateObject = {'bookmark_time':datetime.now()}
-#         updateObject ={'otp_phone': phoneOtps}
-#         query = otp.update_one(queryObject, {'$set': updateObject})
-#         return "Query Inserted!!"
-
-############# wk ###########################
-@app.route('/otpVerfication', methods=['POST'])
-def OtpVerify():
-    user_id = request.values.get("user_id")
-    o_t_p = request.values.get("otp")
-    # query = collection.find()
-    # types = 'effect'
-    output={}
-    regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
-    if(re.search(regex, user_id)):
-        print("Valid Email")
-        bkmk = otp.find_one({'email': user_id, 'otp_email':int(o_t_p)})
-        if bkmk is None:
-            output["response"] = "wrong otp"
-            return JSONEncoder().encode(output)
-            # return "otp wrong!"
-        else:
-            bkmk1 = registartion.insert_one({"email": user_id})
-            output["response"] = "verified"
-            return JSONEncoder().encode(output)
-            return "otp verified!"
-    else:
-        print("Invalid Email")
-        bkmk = otp.find_one({'phone': user_id, 'otp_phone':int(o_t_p)})
-        if bkmk is None:
-            output["response"] = "wrong otp"
-            return JSONEncoder().encode(output)
-        else:
-            bkmk1 = registartion.insert_one({"phone": user_id})
-            output["response"] = "verified"
-            return JSONEncoder().encode(output)
 
 @app.route('/registration/email12', methods=['POST'])
 def email12():
